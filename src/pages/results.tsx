@@ -26,6 +26,7 @@ const Results: React.FC<ResultsProps> = ({ label = "Results" }) => {
 
   useEffect(() => {
     dataFetch();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dataFetch = async () => {

@@ -21,7 +21,7 @@ const colourStyles: StylesConfig<{ label: string; value: string }> = {
   singleValue: (styles) => ({ ...styles }),
 };
 
-const ODSelect = React.forwardRef<Select<OptionType>, ODSelectProps>(
+const ODSelect = React.forwardRef<Select, ODSelectProps>(
     ({ defaultValue, onChangeHandler, options }, ref) => {
       return (
         <Select
@@ -30,7 +30,7 @@ const ODSelect = React.forwardRef<Select<OptionType>, ODSelectProps>(
           options={options}
           styles={colourStyles}
           data-testid="location-select"
-          ref={ref}
+  
         />
       );
     }

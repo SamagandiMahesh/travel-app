@@ -58,9 +58,7 @@ const Form: React.FC<SearchFormProps> = () => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    fetchLocations();
-  }, []);
+ 
 
   const formatLocationData = (data: string[]) => {
     const tempArr: Location[] = data.map((element) => ({
@@ -85,6 +83,11 @@ const Form: React.FC<SearchFormProps> = () => {
       formatLocationData([]);
     }
   };
+
+  useEffect(() => {
+    fetchLocations();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
  const onFlightSearch = useCallback(() => {
   console.log(errors)

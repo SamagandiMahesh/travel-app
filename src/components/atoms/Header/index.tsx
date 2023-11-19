@@ -1,4 +1,3 @@
-// components/atoms/Header/Header.tsx
 
 import React from 'react';
 import PropTypes from 'prop-types';

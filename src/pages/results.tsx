@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import List from "@/components/molecules/List";
-
-
+import Header from "@/components/atoms/Header";
+import { List } from "@/components/molecules/List/List";
 interface Date {
   year: number;
   month: number;
@@ -21,38 +20,36 @@ interface Itinerary {
   price: number;
 }
 
-interface ResultsProps {
-  label?: string;
-}
-
-const Results: React.FC<ResultsProps> = ({ label = "Results" }) => {
+const Results: React.FC = () => {
   const router = useRouter();
   const { toLoc, fromLoc, date } = router.query;
-  console.log({date})
-  console.log(new Date(date as string).toLocaleDateString())
   const [filteredList, setFilteredList] = useState<Itinerary[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dataFetch();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [toLoc, fromLoc, date]);
+
+  const formatDate = (date: Date) => {
+    return new Date(date.year, date.month, date.dayOfMonth).toLocaleDateString();
+  }
 
   const dataFetch = async () => {
     setLoading(true);
     try {
-      let masterData: Itinerary[] =  await (await fetch("http://localhost:4200/itineraries")).json();
+      const response = await fetch("http://localhost:4200/itineraries");
+      const masterData: Itinerary[] = await response.json();
       if(toLoc && fromLoc) {
-        masterData =  getItineraryData(masterData);
-      } 
-      masterData.sort((a, b) => a.price - b.price);
-      setFilteredList(masterData);
+        setFilteredList(getItineraryData(masterData));
+      } else {
+        setFilteredList(masterData);
+      }
     } catch(e) {
       console.error("Failed to fetch itineraries", e);
       setFilteredList([]);
+    } finally {
+      setLoading(false);
     }
-   
-    setLoading(false)
   };
 
   const getItineraryData = (data: Itinerary[]) => {
@@ -61,24 +58,20 @@ const Results: React.FC<ResultsProps> = ({ label = "Results" }) => {
         if(!date) {
           return ele;
         } else {
-          const availableDate = new Date(ele.departureDate.year, ele.departureDate.month, ele.departureDate.dayOfMonth).toLocaleDateString();
-          const selectedDate = new Date(date as string).toLocaleDateString()
-          console.log({selectedDate, availableDate})
-          if  ( selectedDate === availableDate ) {
-            return ele;
-          }
+          const availableDate = formatDate(ele.departureDate);
+          const selectedDate = new Date(date as string).toLocaleDateString();
+          return selectedDate === availableDate;
         }
       }
+      return false;
     }).sort((a,b) => a.price -  b.price);
   };
 
   return (
     <React.Fragment>
-      {/* {filteredList && (<><Title title={label} /> */}
-      {filteredList.length > 0 && !loading && <List filteredList={filteredList} />}
-      {/* {filteredList.length === 0 && !loading && <Title title="No Results to display"/>} */}
-      {/* {loading && <Loader />} */}
-      {/* </> )} */}
+      <Header />
+      <label>Results Page</label>
+      {!loading && (filteredList.length > 0 ? <List filteredList={filteredList} /> : <label>No Results to display</label>)}
     </React.Fragment>
   );
 };

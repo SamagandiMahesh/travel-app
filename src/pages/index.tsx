@@ -1,11 +1,8 @@
-// pages/index.tsx
-
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Form from "@/components/molecules/Form";
-import Header from "@/components/atoms/Header";
+import React, {  } from "react";
 import Footer from "@/components/atoms/Footer";
 import styled from "styled-components";
+import { Form } from "@/components/molecules/Form/Form";
+import Header from "@/components/atoms/Header";
 
 const StyledTitle = styled.h1`
     color: '#000';
@@ -15,8 +12,6 @@ const StyledTitle = styled.h1`
 
 
 const Home: React.FC<{ label?: string }> = ({ label = "Home Page" }) => {
-
-
   return (
     <>
     <Header/>

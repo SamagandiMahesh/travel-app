@@ -3,14 +3,21 @@ import { useRouter } from 'next/router';
 import List from "@/components/molecules/List";
 
 
+interface Date {
+  year: number;
+  month: number;
+  dayOfMonth: number;
+  hourOfDay: number;
+  minute: number;
+  second: number;
+}
+
 interface Itinerary {
+  carrier: string;
   departureLocation: string;
   arrivalLocation: string;
-  departureDate: {
-    year: number;
-    month: number;
-    dayOfMonth: number;
-  };
+  departureDate: Date;
+  arrivalDate: Date;
   price: number;
 }
 
@@ -21,6 +28,8 @@ interface ResultsProps {
 const Results: React.FC<ResultsProps> = ({ label = "Results" }) => {
   const router = useRouter();
   const { toLoc, fromLoc, date } = router.query;
+  console.log({date})
+  console.log(new Date(date as string).toLocaleDateString())
   const [filteredList, setFilteredList] = useState<Itinerary[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -52,14 +61,15 @@ const Results: React.FC<ResultsProps> = ({ label = "Results" }) => {
         if(!date) {
           return ele;
         } else {
-          const  availableDate = new Date(ele.departureDate.year, ele.departureDate.month, ele.departureDate.dayOfMonth).toLocaleDateString();
+          const availableDate = new Date(ele.departureDate.year, ele.departureDate.month, ele.departureDate.dayOfMonth).toLocaleDateString();
           const selectedDate = new Date(date as string).toLocaleDateString()
+          console.log({selectedDate, availableDate})
           if  ( selectedDate === availableDate ) {
             return ele;
           }
         }
       }
-    }).sort((a,b) => b.price -  a.price);
+    }).sort((a,b) => a.price -  b.price);
   };
 
   return (

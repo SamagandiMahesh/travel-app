@@ -14,7 +14,6 @@ interface ODDatePickerProps {
           selected={selectedDate}
           onChange={dateChangeHandler}
           data-testid="date-picker"
-         ref={ref}
         />
       );
     }

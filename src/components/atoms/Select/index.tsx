@@ -1,19 +1,20 @@
-// components/atoms/Select/Select.tsx
-
 import React, { ForwardedRef } from 'react';
-import Select, { StylesConfig } from 'react-select';
+import Select, { ActionMeta, MultiValue, Options, PropsValue, SingleValue, StylesConfig } from 'react-select';
 
-interface OptionType {
-    label: string;
-    value: string;
-  }
+interface Option {
+  readonly label: string;
+  readonly value: string;
+}
   
-  interface ODSelectProps {
-    defaultValue?: OptionType;
-    onChangeHandler: (option: OptionType | null) => void;
-    options: OptionType[];
-  }
-  
+interface ODSelectProps {
+  defaultValue?: SingleValue<Option>;
+  onChange: (newValue: SingleValue<Option> | MultiValue<Option>, actionMeta: ActionMeta<Option>) => void;
+  options: Options<Option>;
+}
+
+
+
+
 const colourStyles: StylesConfig<{ label: string; value: string }> = {
   control: (styles) => ({ ...styles, backgroundColor: '#fff', height: '44px', borderColor: '#ccc' }),
   input: (styles) => ({ ...styles }),
@@ -22,15 +23,14 @@ const colourStyles: StylesConfig<{ label: string; value: string }> = {
 };
 
 const ODSelect = React.forwardRef<Select, ODSelectProps>(
-    ({ defaultValue, onChangeHandler, options }, ref) => {
+    ({ defaultValue, onChange, options }, ref) => {
       return (
         <Select
           defaultValue={defaultValue}
-          onChange={onChangeHandler}
+          onChange={onChange}
           options={options}
           styles={colourStyles}
           data-testid="location-select"
-  
         />
       );
     }

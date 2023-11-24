@@ -20,8 +20,7 @@ export const StyledButton = styled.button`
 export const StyledForm = styled.div`
 
     label {
-        display: flex;
-        margin-bottom: 5px;
+       
     }
 
 `;

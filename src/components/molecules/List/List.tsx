@@ -1,50 +1,78 @@
 import React from "react";
-import styled from "styled-components";
 import { CustomDate, ListProps } from "./List.types";
-import { StyledAirlineDetailsSection } from "./List.styles";
-
 
 const formatDate = (dt: CustomDate) => {
-  const d = new Date(dt.year, dt.month, dt.dayOfMonth, dt.hourOfDay, dt.minute, dt.second).toDateString();
+  const d = new Date(
+    dt.year,
+    dt.month,
+    dt.dayOfMonth,
+    dt.hourOfDay,
+    dt.minute,
+    dt.second
+  ).toDateString();
   return d;
-}
-
-export const List: React.FC<ListProps> = ({ label = "Airlines", filteredList }) => {
-  return (
-    <ul data-testid="flight-detail-list">
-      {filteredList.map((list, index) => (
-        <li key={index} className="m-6 shadow-md rounded-md">
-          <section className="text-sm leading-6 p-6">
-            <label className="uppercase text-gray-500">{label}</label>
-            <span className="text-gray-500">: {list.carrier}</span>
-          </section>
-
-          <section className="flex justify-between">
-            <div className="w-1/2 text-left">
-            
-              <StyledAirlineDetailsSection data-testid="flight-details" >
-                <span className="label-section">Departure</span>
-                <span className="time-section">{formatDate(list.departureDate)}</span>
-                <span className="location-section">{list.departureLocation}</span>
-            </StyledAirlineDetailsSection>
-            </div>
-            <div className="w-1/2 text-right">
-            
-               <StyledAirlineDetailsSection data-testid="flight-details" >
-                <span className="label-section">Arrival</span>
-                <span className="time-section">{formatDate(list.arrivalDate)}</span>
-                <span className="location-section">{list.arrivalLocation}</span>
-            </StyledAirlineDetailsSection>
-            </div>
-          </section>
-
-          <section className="text-lg leading-6 text-right bg-gray-200 p-6">
-            <label className="block">{list.price}</label>
-            <span className="block text-sm leading-6 text-gray-500 font-normal">per passenger</span>
-          </section>
-        </li>
-      ))}
-    </ul>
-  );
 };
 
+const FlightDetail: React.FC<{
+  label: string;
+  location: string;
+  date: CustomDate;
+  testId: string;
+  className?: string;
+}> = ({ label, location, date, testId, className }) => (
+  <section data-testid={testId} className="my-2">
+    <div className={`d-flex  align-items-center ${className}`}>
+      <p className="text-muted small">{label}:&nbsp;</p>
+      <p className="text-muted text-uppercase">{location}</p>
+    </div>
+    <p className="h5">{formatDate(date)}</p>
+  </section>
+);
+
+const ListItem: React.FC<{ list: any; label: string }> = ({ list, label }) => (
+  <li className="my-3 shadow rounded">
+    <section className=" p-3 d-flex align-items-center">
+      <p className="text-secondary small">{label}:&nbsp;</p>
+      <p className="text-uppercase"> {list.carrier}</p>
+    </section>
+
+    <hr className="m-0" />
+    <section className="d-flex flex-column flex-md-row justify-content-between p-3">
+      <div className="w-100 w-md-50 text-start">
+        <FlightDetail
+          label="Departure"
+          location={list.departureLocation}
+          date={list.departureDate}
+          testId="departure-details"
+        />
+      </div>
+      <div className="w-100 w-md-50 text-end">
+        <FlightDetail
+          label="Arrival"
+          location={list.arrivalLocation}
+          date={list.arrivalDate}
+          testId="arrival-details"
+          className="d-flex justify-content-end"
+        />
+      </div>
+    </section>
+
+    <section className="lead text-end bg-light p-3">
+      <label className="d-block">{list.price}</label>
+      <small className="text-end text-muted fw-light small d-block">
+        per passenger
+      </small>
+    </section>
+  </li>
+);
+
+export const List: React.FC<ListProps> = ({
+  label = "Airlines",
+  filteredList,
+}) => (
+  <ul data-testid="flight-detail-list" className="list-unstyled">
+    {filteredList.map((list, index) => (
+      <ListItem key={index} list={list} label={label} />
+    ))}
+  </ul>
+);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 
 import { List } from "@/components/molecules/List/List";
-import { Header } from "@/components/atoms/Header/Header";
+
 interface Date {
   year: number;
   month: number;
@@ -27,33 +27,14 @@ const Results: React.FC = () => {
   const [filteredList, setFilteredList] = useState<Itinerary[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    dataFetch();
-  }, [toLoc, fromLoc, date]);
-
   const formatDate = (date: Date) => {
     return new Date(date.year, date.month, date.dayOfMonth).toLocaleDateString();
   }
 
-  const dataFetch = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("http://localhost:4200/itineraries");
-      const masterData: Itinerary[] = await response.json();
-      if(toLoc && fromLoc) {
-        setFilteredList(getItineraryData(masterData));
-      } else {
-        setFilteredList(masterData);
-      }
-    } catch(e) {
-      console.error("Failed to fetch itineraries", e);
-      setFilteredList([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const getItineraryData = (data: Itinerary[]) => {
+    if (!toLoc && !fromLoc) {
+      return data;
+    }
     return data.filter((ele) => {
       if (ele.departureLocation === fromLoc && ele.arrivalLocation === toLoc) {
         if(!date) {
@@ -68,10 +49,27 @@ const Results: React.FC = () => {
     }).sort((a,b) => a.price -  b.price);
   };
 
+  const dataFetch = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:4200/itineraries");
+      const masterData: Itinerary[] = await response.json();
+      setFilteredList(getItineraryData(masterData));
+    } catch(e) {
+      console.error("Failed to fetch itineraries", e);
+      setFilteredList([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    dataFetch();
+  }, [toLoc, fromLoc, date]);
+
   return (
     <React.Fragment>
-      <Header />
-      <label>Results Page</label>
+      <h1 className="display-5">Results Page</h1>
       {!loading && (filteredList.length > 0 ? <List filteredList={filteredList} /> : <label>No Results to display</label>)}
     </React.Fragment>
   );

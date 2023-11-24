@@ -1,26 +1,24 @@
-import React, {  } from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 import { Form } from "@/components/molecules/Form/Form";
-import { Header } from "@/components/atoms/Header/Header";
-import { Footer } from "@/components/atoms/Footer/Footer";
 
+interface HomeProps {
+  label?: ReactNode;
+}
 
-const StyledTitle = styled.h1`
-    color: '#000';
-    font-size: 24px;
-    margin: 0;
-`;
+const defaultProps: HomeProps = {
+  label: "Home Page",
+};
 
-
-const Home: React.FC<{ label?: string }> = ({ label = "Home Page" }) => {
+const Home: React.FC<HomeProps> = ({ label }) => {
   return (
     <>
-    <Header/>
-      <StyledTitle>{label}</StyledTitle>
-      <Form/>
-      <Footer/>
+      <h1 className="display-5">{label}</h1>
+      <Form />
     </>
   );
 };
+
+Home.defaultProps = defaultProps;
 
 export default Home;

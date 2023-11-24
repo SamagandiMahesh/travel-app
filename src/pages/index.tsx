@@ -13,7 +13,7 @@ const defaultProps: HomeProps = {
 const Home: React.FC<HomeProps> = ({ label }) => {
   return (
     <>
-      <h1 className="display-5">{label}</h1>
+      <h2 className="display-6 my-4">{label}</h2>
       <Form />
     </>
   );

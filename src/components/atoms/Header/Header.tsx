@@ -1,21 +1,14 @@
-
 import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import Link from 'next/link';
-import { StyledHeader } from './Header.styles';
+import { StyledH1, StyledHeader } from './Header.styles';
 import { HeaderProps } from './Header.types';
 
-
-
-export const Header: React.FC<HeaderProps> = ({ label = 'EDreams Odigeo' }) => {
+export const Header: React.FC<HeaderProps> = ({ label = 'eDreams Odigeo' }) => {
   return (
     <StyledHeader data-testid="header">
       <Link href="/">
-        <label>{label}</label>
+        <StyledH1>{label}</StyledH1>
       </Link>
     </StyledHeader>
   );
 };
-
-

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from 'next/router';
 
 import { List } from "@/components/molecules/List/List";
+import useFetchData from "@/hooks/useFetch";
 
 interface Date {
   year: number;
@@ -21,55 +22,48 @@ interface Itinerary {
   price: number;
 }
 
+const formatDate = (date: Date) => {
+  return new Date(date.year, date.month, date.dayOfMonth).toLocaleDateString();
+}
+
 const Results: React.FC = () => {
   const router = useRouter();
-  const { toLoc, fromLoc, date } = router.query;
+  const { arrival, departure, date } = router.query;
   const [filteredList, setFilteredList] = useState<Itinerary[]>([]);
-  const [loading, setLoading] = useState(false);
+ 
 
-  const formatDate = (date: Date) => {
-    return new Date(date.year, date.month, date.dayOfMonth).toLocaleDateString();
-  }
-
-  const getItineraryData = (data: Itinerary[]) => {
-    if (!toLoc && !fromLoc) {
-      return data;
+  const isDateMatch = useCallback((eleDate: Date, selectedDate: string) => {
+    if (!selectedDate) {
+      return true;
     }
+    const availableDate = formatDate(eleDate);
+    const formattedSelectedDate = new Date(selectedDate).toLocaleDateString();
+    return formattedSelectedDate === availableDate;
+  }, []);
+
+  const getItineraryData = useCallback((data: Itinerary[]) => {
     return data.filter((ele) => {
-      if (ele.departureLocation === fromLoc && ele.arrivalLocation === toLoc) {
-        if(!date) {
-          return ele;
-        } else {
-          const availableDate = formatDate(ele.departureDate);
-          const selectedDate = new Date(date as string).toLocaleDateString();
-          return selectedDate === availableDate;
-        }
-      }
-      return false;
-    }).sort((a,b) => a.price -  b.price);
-  };
+      const isDepartureMatch = departure ? ele.departureLocation === departure : true;
+      const isArrivalMatch = arrival ? ele.arrivalLocation === arrival : true;
+      const isDateMatched = isDateMatch(ele.departureDate, date as string);
 
-  const dataFetch = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("http://localhost:4200/itineraries");
-      const masterData: Itinerary[] = await response.json();
-      setFilteredList(getItineraryData(masterData));
-    } catch(e) {
-      console.error("Failed to fetch itineraries", e);
-      setFilteredList([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+      return isDepartureMatch && isArrivalMatch && isDateMatched;
+    }).sort((a, b) => a.price - b.price);
+  }, [arrival, departure, date, isDateMatch]);
+
+  const { data, loading, error } = useFetchData<Itinerary>(
+    "http://localhost:4200/itineraries",
+  );
 
   useEffect(() => {
-    dataFetch();
-  }, [toLoc, fromLoc, date]);
+    if (data) {
+      setFilteredList(getItineraryData(data));
+    }
+  }, [data, getItineraryData]);
 
   return (
     <React.Fragment>
-      <h1 className="display-5">Results Page</h1>
+      <h2 className="display-6 my-4">Results Page</h2>
       {!loading && (filteredList.length > 0 ? <List filteredList={filteredList} /> : <label>No Results to display</label>)}
     </React.Fragment>
   );

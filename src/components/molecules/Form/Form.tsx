@@ -5,6 +5,10 @@ import { Location, SearchFormProps } from "./Form.types";
 import { StyledButton, StyledForm } from "./Form.styles";
 import { ODSelect } from "@/components/atoms/Select/Select";
 import { ODDatePicker } from "@/components/atoms/Datepicker/Datepicker";
+import useFetchData from "@/hooks/useFetch";
+
+type FieldName = "departureLocation" | "arrivalLocation" | "selectedDate";
+  
 
 export const Form: React.FC<SearchFormProps> = () => {
   const {
@@ -26,56 +30,75 @@ export const Form: React.FC<SearchFormProps> = () => {
 
   const router = useRouter();
 
-  const createOption = (data: string[]) => {
-    const tempArr: Location[] = data.map((element) => ({
+  const createOption = useCallback((data: string[]) => {
+    return data.map((element) => ({
       label: element,
       value: element,
     }));
-    setLocation(tempArr);
-  };
-
-  const fetchLocations = async () => {
-    try {
-      const response = await fetch("http://localhost:4200/locations", {
-        mode: "cors",
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const locData: string[] = await response.json();
-      createOption(locData);
-    } catch (e) {
-      console.error("Failed to fetch location Data", e);
-      setLocation([]);
-      createOption([]);
-    }
-  };
-
-  useEffect(() => {
-    fetchLocations();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { data: locData, loading, error } = useFetchData<string>(
+    "http://localhost:4200/locations",
+  );
+
+  useEffect(() => {
+    if (locData) {
+      setLocation(createOption(locData));
+    }
+  }, [createOption, locData]);
+
+
   const onFlightSearch = useCallback(() => {
-    console.log(errors);
-    const queryParams = new URLSearchParams([
-      ["fromLoc", departureLocation],
-      ["toLoc", arrivalLocation],
-      ["date", selectedDate?.toDateString() || ""],
-    ]);
+    const queryParams = new URLSearchParams();
+    const query: { [key: string]: string } = {};
+
+    if (departureLocation) {
+      queryParams.append("departure", departureLocation);
+      query.departure = departureLocation;
+    }
+
+    if (arrivalLocation) {
+      queryParams.append("arrival", arrivalLocation);
+      query.arrival = arrivalLocation;
+    }
+
+    if (departureLocation && arrivalLocation && selectedDate) {
+      const dateString = selectedDate.toDateString();
+      queryParams.append("date", dateString);
+      query.date = dateString;
+    }
 
     router.push(
       {
         pathname: "/results",
-        query: {
-          fromLoc: departureLocation,
-          toLoc: arrivalLocation,
-          date: selectedDate?.toDateString(),
-        },
+        query,
       },
       `/results?${decodeURIComponent(queryParams.toString())}`
     );
-  }, [errors, departureLocation, arrivalLocation, selectedDate, router]);
+  }, [departureLocation, arrivalLocation, selectedDate, router]);
+  
+  const renderController = useCallback(
+    (name: FieldName, label: string, Component: any, setValue: any) => (
+      <div className="col-lg-3 col-md-6 col-sm-12">
+        <label>{label}</label>
+        <Controller
+          name={name}
+          control={control}
+          render={({ field: { onChange } }) => (
+           
+            <Component
+              options={location}
+              onChange={(option: Location) => {
+                onChange(option);
+                setValue((option as Location).value);
+              }}
+            />
+          )}
+        />
+      </div>
+    ),
+    [control, location]
+  );
 
   return (
     <StyledForm className="container-fluid">
@@ -84,39 +107,8 @@ export const Form: React.FC<SearchFormProps> = () => {
         data-testid="flight-search-form"
         className="row"
       >
-        <div className="col-lg-3 col-md-6 col-sm-12">
-          <label>Departure location</label>
-          <Controller
-            name="departureLocation"
-            control={control}
-            render={({ field: { onChange } }) => (
-              <ODSelect
-                options={location}
-                onChange={(option) => {
-                  console.log(option);
-                  onChange(option);
-                  setDepartureLocation((option as Location).value);
-                }}
-              />
-            )}
-          />
-        </div>
-        <div className="col-lg-3 col-md-6 col-sm-12">
-          <label>Arrival location</label>
-          <Controller
-            name="arrivalLocation"
-            control={control}
-            render={({ field: { onChange } }) => (
-              <ODSelect
-                options={location}
-                onChange={(option) => {
-                  onChange(option);
-                  setArrivalLocation((option as Location).value);
-                }}
-              />
-            )}
-          />
-        </div>
+        {renderController("departureLocation", "Departure location", ODSelect, setDepartureLocation)}
+        {renderController("arrivalLocation", "Arrival location", ODSelect, setArrivalLocation)}
         <div className="col-lg-3 col-md-6 col-sm-12">
           <label>Departure date</label>
           <Controller
@@ -140,3 +132,5 @@ export const Form: React.FC<SearchFormProps> = () => {
     </StyledForm>
   );
 };
+
+export default Form;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import Header from "@/components/atoms/Header";
+
 import { List } from "@/components/molecules/List/List";
+import { Header } from "@/components/atoms/Header/Header";
 interface Date {
   year: number;
   month: number;

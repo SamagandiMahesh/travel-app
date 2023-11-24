@@ -1,10 +1,11 @@
-import ODDatePicker from '@/components/atoms/Datepicker';
+
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Location, SearchFormProps } from './Form.types';
 import { StyledButton, StyledForm } from './Form.styles';
 import { ODSelect } from '@/components/atoms/Select/Select';
+import { ODDatePicker } from '@/components/atoms/Datepicker/Datepicker';
 
 
 export const Form: React.FC<SearchFormProps> = () => {
@@ -59,7 +60,7 @@ export const Form: React.FC<SearchFormProps> = () => {
 const queryParams = new URLSearchParams([
   ['fromLoc', departureLocation],
   ['toLoc', arrivalLocation],
-  ['date', selectedDate?.toISOString() || ''],
+  ['date', selectedDate?.toDateString() || ''],
 ]);
 
   router.push({
@@ -67,9 +68,9 @@ const queryParams = new URLSearchParams([
     query: {
       fromLoc:  departureLocation,
       toLoc: arrivalLocation,
-      date: selectedDate?.toISOString(),
+      date: selectedDate?.toDateString(),
     },
-  }, `/results?${queryParams.toString()}`);
+  }, `/results?${decodeURIComponent(queryParams.toString())}`);
 }, [errors, departureLocation, arrivalLocation, selectedDate, router]);
 
 

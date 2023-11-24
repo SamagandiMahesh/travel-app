@@ -1,8 +1,9 @@
 import React, {  } from "react";
-import Footer from "@/components/atoms/Footer";
 import styled from "styled-components";
 import { Form } from "@/components/molecules/Form/Form";
-import Header from "@/components/atoms/Header";
+import { Header } from "@/components/atoms/Header/Header";
+import { Footer } from "@/components/atoms/Footer/Footer";
+
 
 const StyledTitle = styled.h1`
     color: '#000';

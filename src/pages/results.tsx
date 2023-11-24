@@ -23,14 +23,14 @@ interface Itinerary {
 }
 
 const formatDate = (date: Date) => {
-  return new Date(date.year, date.month, date.dayOfMonth).toLocaleDateString();
+  return new Date(date.year, date.month - 1, date.dayOfMonth).toLocaleDateString();
 }
 
 const Results: React.FC = () => {
   const router = useRouter();
   const { arrival, departure, date } = router.query;
   const [filteredList, setFilteredList] = useState<Itinerary[]>([]);
- 
+  const [currentPage, setCurrentPage] = useState(1);
 
   const isDateMatch = useCallback((eleDate: Date, selectedDate: string) => {
     if (!selectedDate) {
@@ -54,6 +54,7 @@ const Results: React.FC = () => {
   const { data, loading, error } = useFetchData<Itinerary>(
     "http://localhost:4200/itineraries",
   );
+  
 
   useEffect(() => {
     if (data) {
@@ -61,11 +62,57 @@ const Results: React.FC = () => {
     }
   }, [data, getItineraryData]);
 
+  const PER_PAGE = 5;
+  const totalPages = Math.ceil(filteredList.length / PER_PAGE);
+
+  const handleNext = () => {
+    setCurrentPage((page) => Math.min(page + 1, totalPages));
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage((page) => Math.max(page - 1, 1));
+  };
+
+  const handlePageNumber = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const begin = (currentPage - 1) * PER_PAGE;
+  const end = begin + PER_PAGE;
+  const currentData = filteredList.slice(begin, end);
+
   return (
     <React.Fragment>
-      <h2 className="display-6 my-4">Results Page</h2>
-      {!loading && (filteredList.length > 0 ? <List filteredList={filteredList} /> : <label>No Results to display</label>)}
-    </React.Fragment>
+    <h2 className="display-6 my-4">Results Page</h2>
+    {!loading && (filteredList.length > 0 ? (
+      <>
+        <List filteredList={currentData} />
+        {totalPages > 1 && (
+        <nav>
+          <ul className="pagination justify-content-center my-5">
+            <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
+              <button className="page-link" onClick={handlePrevious}>
+                Previous
+              </button>
+            </li>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li key={index} className={`page-item ${currentPage === index + 1 && 'active'}`}>
+                <button className="page-link" onClick={() => handlePageNumber(index + 1)}>
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+            <li className={`page-item ${currentPage === totalPages && 'disabled'}`}>
+              <button className="page-link" onClick={handleNext}>
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+         )}
+      </>
+    ) : <label>No Results to display</label>)}
+  </React.Fragment>
   );
 };
 

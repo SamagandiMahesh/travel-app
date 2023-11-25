@@ -6,4 +6,9 @@ export const StyledInput = styled.input`
 
 export const StyledDatePicker = styled.div`
     width: 100%:
+    border: 1px solid red;
+
+    .react-datepicker-wrapper {
+        display: block;
+    }
 `

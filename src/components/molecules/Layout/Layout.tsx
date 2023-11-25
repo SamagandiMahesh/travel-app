@@ -9,9 +9,7 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => (
   <div>
     <Header />
-    <section className="container mx-auto">
-    {children}
-    </section>
+    <section className="container-lg mx-auto">{children}</section>
     <Footer />
   </div>
 );

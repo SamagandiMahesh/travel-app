@@ -6,3 +6,4 @@ export * from './atoms/Header';
 export * from './molecules/Form';
 export * from './molecules/List';
 export * from './molecules/Layout';
+export * from  './molecules/Pagination';

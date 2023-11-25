@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { List } from "@/components/molecules/List/List";
 import useFetchData from "@/hooks/useFetch";
+import { Pagination } from "@/components/molecules/Pagination/Pagination";
 
 interface Date {
   year: number;
@@ -88,30 +89,22 @@ const Results: React.FC = () => {
       <>
         <List filteredList={currentData} />
         {totalPages > 1 && (
-        <nav>
-          <ul className="pagination justify-content-center my-5">
-            <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
-              <button className="page-link" onClick={handlePrevious}>
-                Previous
-              </button>
-            </li>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <li key={index} className={`page-item ${currentPage === index + 1 && 'active'}`}>
-                <button className="page-link" onClick={() => handlePageNumber(index + 1)}>
-                  {index + 1}
-                </button>
-              </li>
-            ))}
-            <li className={`page-item ${currentPage === totalPages && 'disabled'}`}>
-              <button className="page-link" onClick={handleNext}>
-                Next
-              </button>
-            </li>
-          </ul>
-        </nav>
-         )}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePrevious={handlePrevious}
+            handleNext={handleNext}
+            handlePageNumber={handlePageNumber}
+          />
+        )}
       </>
-    ) : <label>No Results to display</label>)}
+    ) : (
+      <div className="card">
+        <div className="card-body text-info">
+          <label>No Results to display</label>
+        </div>
+      </div>
+    ))}
   </React.Fragment>
   );
 };

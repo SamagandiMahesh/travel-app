@@ -79,7 +79,7 @@ export const Form: React.FC<SearchFormProps> = () => {
   
   const renderController = useCallback(
     (name: FieldName, label: string, Component: any, setValue: any) => (
-      <div className="col-lg-3 col-md-6 col-sm-12">
+      <div className="my-2 p-xs-0 col-lg-3 col-md-6 col-sm-6 col-xs-12">
         <label>{label}</label>
         <Controller
           name={name}
@@ -109,7 +109,7 @@ export const Form: React.FC<SearchFormProps> = () => {
       >
         {renderController("departureLocation", "Departure location", ODSelect, setDepartureLocation)}
         {renderController("arrivalLocation", "Arrival location", ODSelect, setArrivalLocation)}
-        <div className="col-lg-3 col-md-6 col-sm-12">
+        <div className="my-2 p-xs-0 col-lg-3 col-md-6 col-sm-6 col-xs-12">
           <label>Departure date</label>
           <Controller
             name="selectedDate"
@@ -124,8 +124,8 @@ export const Form: React.FC<SearchFormProps> = () => {
               />
             )}
           />
-        </div>
-        <div className="col-lg-3 col-md-6 col-sm-12 d-flex align-items-end">
+        </div> 
+        <div className="my-2 p-0 col-lg-3 col-md-6 col-sm-6 col-xs-12 d-flex align-items-end">
           <StyledButton type="submit">Search</StyledButton>
         </div>
       </form>

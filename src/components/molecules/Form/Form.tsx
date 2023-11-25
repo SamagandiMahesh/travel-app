@@ -1,14 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Location, SearchFormProps } from "./Form.types";
+import { FieldName, Location, SearchFormProps } from "./Form.types";
 import { StyledButton, StyledForm } from "./Form.styles";
 import { ODSelect } from "@/components/atoms/Select/Select";
 import { ODDatePicker } from "@/components/atoms/Datepicker/Datepicker";
 import useFetchData from "@/hooks/useFetch";
-
-type FieldName = "departureLocation" | "arrivalLocation" | "selectedDate";
-  
 
 export const Form: React.FC<SearchFormProps> = () => {
   const {
@@ -71,15 +68,15 @@ export const Form: React.FC<SearchFormProps> = () => {
     router.push(
       {
         pathname: "/results",
-        query,
+        query:decodeURIComponent(queryParams.toString()),
       },
-      `/results?${decodeURIComponent(queryParams.toString())}`
+      
     );
   }, [departureLocation, arrivalLocation, selectedDate, router]);
   
   const renderController = useCallback(
     (name: FieldName, label: string, Component: any, setValue: any) => (
-      <div className="my-2 p-xs-0 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+      <div className="my-2 p-xs-0 ps-lg-0 col-lg-3 col-md-6 col-sm-6 col-xs-12">
         <label>{label}</label>
         <Controller
           name={name}
@@ -109,7 +106,7 @@ export const Form: React.FC<SearchFormProps> = () => {
       >
         {renderController("departureLocation", "Departure location", ODSelect, setDepartureLocation)}
         {renderController("arrivalLocation", "Arrival location", ODSelect, setArrivalLocation)}
-        <div className="my-2 p-xs-0 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div className="my-2 p-xs-0  ps-lg-0  col-lg-3 col-md-6 col-sm-6 col-xs-12">
           <label>Departure date</label>
           <Controller
             name="selectedDate"

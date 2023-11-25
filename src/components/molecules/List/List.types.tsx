@@ -1,4 +1,4 @@
-export interface CustomDate {
+export type CustomDate= {
     year: number;
     month: number;
     dayOfMonth: number;
@@ -7,7 +7,7 @@ export interface CustomDate {
     second: number;
   }
   
-  export interface Itinerary {
+  export type Itinerary ={
     carrier: string;
     departureLocation: string;
     arrivalLocation: string;
@@ -16,7 +16,7 @@ export interface CustomDate {
     price: number;
   }
   
-  export interface ListProps {
+  export type ListProps = {
     label?: string;
     filteredList: Itinerary[];
   }

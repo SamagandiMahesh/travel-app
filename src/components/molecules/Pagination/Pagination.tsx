@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PaginationProps } from './Pagination.types';
 
-export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, handlePrevious, handleNext, handlePageNumber }) => {
-  const pageNumbers = [];
+export const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, handlePageChange }) => {
+  const [pageNumbers, setPageNumbers] = useState<number[]>([]);
 
-  for (let i = 1; i <= totalPages; i++) {
-    // Always display the first 2 pages, the last 2 pages, and 2 pages on either side of the current page
-    if (i === 1 || i === 2 || i === totalPages || i === totalPages - 1 || i === currentPage || i === currentPage - 1 || i === currentPage + 1) {
-      pageNumbers.push(i);
-    } else if (i === 3 && currentPage > 3) {
-      // Add an ellipsis instead of a page number if the current page is greater than 3
-      pageNumbers.push('...');
-    } else if (i === totalPages - 2 && currentPage < totalPages - 2) {
-      // Add an ellipsis instead of a page number if the current page is less than totalPages - 2
-      pageNumbers.push('...');
+  useEffect(() => {
+    let numbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === 2 || i === totalPages || i === totalPages - 1 || i === currentPage || i === currentPage - 1 || i === currentPage + 1) {
+        numbers.push(i);
+      } else if (i === 3 && currentPage > 3) {
+        numbers.push(-1); // Add -1 to represent an ellipsis
+      } else if (i === totalPages - 2 && currentPage < totalPages - 2) {
+        numbers.push(-1);
+      }
     }
-  }
+    setPageNumbers(numbers);
+  }, [currentPage, totalPages]);
+
+  const handleNext = () => {
+    let nextPage = Math.min(currentPage + 1, totalPages);
+    handlePageChange(nextPage);
+  };
+
+  const handlePrevious = () => {
+    let prevPage = Math.max(currentPage - 1, 1);
+    handlePageChange(prevPage);
+  };
+
+  const handlePageNumber = (pageNumber: number) => {
+    handlePageChange(pageNumber);
+  };
 
   return (
     <nav>
@@ -26,9 +41,9 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
           </button>
         </li>
         {pageNumbers.map((number, index) => (
-          <li key={index} className={`page-item ${number === currentPage && 'active'} ${number === '...' && 'disabled'}`}>
-            <button className="page-link" onClick={() => number !== '...' && handlePageNumber(+number)}>
-              {number}
+          <li key={index} className={`page-item ${number === currentPage && 'active'} ${number === -1 && 'disabled'}`}>
+            <button className="page-link" onClick={() => number !== -1 && handlePageNumber(number)}>
+              {number === -1 ? '...' : number}
             </button>
           </li>
         ))}

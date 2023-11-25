@@ -2,10 +2,10 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from 'next/router';
 
 import { List } from "@/components/molecules/List/List";
-import useFetchData from "@/hooks/useFetch";
 import { Pagination } from "@/components/molecules/Pagination/Pagination";
+import useFetchData from "@/hooks/useFetch";
 
-interface Date {
+type Date =  {
   year: number;
   month: number;
   dayOfMonth: number;
@@ -14,7 +14,7 @@ interface Date {
   second: number;
 }
 
-interface Itinerary {
+type Itinerary  = {
   carrier: string;
   departureLocation: string;
   arrivalLocation: string;
@@ -23,15 +23,20 @@ interface Itinerary {
   price: number;
 }
 
-const formatDate = (date: Date) => {
-  return new Date(date.year, date.month - 1, date.dayOfMonth).toLocaleDateString();
-}
-
 const Results: React.FC = () => {
   const router = useRouter();
   const { arrival, departure, date } = router.query;
+
   const [filteredList, setFilteredList] = useState<Itinerary[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, loading, error } = useFetchData<Itinerary>(
+    "http://localhost:4200/itineraries",
+  );
+
+  const formatDate = useCallback((date: Date) => {
+    return new Date(date.year, date.month - 1, date.dayOfMonth).toLocaleDateString();
+  }, []);
 
   const isDateMatch = useCallback((eleDate: Date, selectedDate: string) => {
     if (!selectedDate) {
@@ -40,7 +45,7 @@ const Results: React.FC = () => {
     const availableDate = formatDate(eleDate);
     const formattedSelectedDate = new Date(selectedDate).toLocaleDateString();
     return formattedSelectedDate === availableDate;
-  }, []);
+  }, [formatDate]);
 
   const getItineraryData = useCallback((data: Itinerary[]) => {
     return data.filter((ele) => {
@@ -52,11 +57,6 @@ const Results: React.FC = () => {
     }).sort((a, b) => a.price - b.price);
   }, [arrival, departure, date, isDateMatch]);
 
-  const { data, loading, error } = useFetchData<Itinerary>(
-    "http://localhost:4200/itineraries",
-  );
-  
-
   useEffect(() => {
     if (data) {
       setFilteredList(getItineraryData(data));
@@ -66,46 +66,34 @@ const Results: React.FC = () => {
   const PER_PAGE = 5;
   const totalPages = Math.ceil(filteredList.length / PER_PAGE);
 
-  const handleNext = () => {
-    setCurrentPage((page) => Math.min(page + 1, totalPages));
-  };
-
-  const handlePrevious = () => {
-    setCurrentPage((page) => Math.max(page - 1, 1));
-  };
-
-  const handlePageNumber = (pageNumber: number) => {
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  const begin = (currentPage - 1) * PER_PAGE;
-  const end = begin + PER_PAGE;
-  const currentData = filteredList.slice(begin, end);
+  const currentData = filteredList.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
 
   return (
     <React.Fragment>
-    <h2 className="display-6 my-4">Results Page</h2>
-    {!loading && (filteredList.length > 0 ? (
-      <>
-        <List filteredList={currentData} />
-        {totalPages > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            handlePrevious={handlePrevious}
-            handleNext={handleNext}
-            handlePageNumber={handlePageNumber}
-          />
-        )}
-      </>
-    ) : (
-      <div className="card">
-        <div className="card-body text-info">
-          <label>No Results to display</label>
+      <h2 className="display-6 my-4">Results Page</h2>
+      {!loading && (filteredList.length > 0 ? (
+        <>
+          <List filteredList={currentData} />
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePageChange={handlePageChange}
+            />
+          )}
+        </>
+      ) : (
+        <div className="card">
+          <div className="card-body text-info">
+            <label>No Results to display</label>
+          </div>
         </div>
-      </div>
-    ))}
-  </React.Fragment>
+      ))}
+    </React.Fragment>
   );
 };
 

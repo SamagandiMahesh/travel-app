@@ -1,7 +1,5 @@
-export interface PaginationProps {
-    currentPage: number;
+export type PaginationProps = {
     totalPages: number;
-    handlePrevious: () => void;
-    handleNext: () => void;
-    handlePageNumber: (pageNumber: number) => void;
+    currentPage: number;
+    handlePageChange: (pageNumber: number) => void;
   }

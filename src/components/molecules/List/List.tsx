@@ -31,14 +31,14 @@ const FlightDetail: React.FC<{
 
 const ListItem: React.FC<{ list: any; label: string }> = ({ list, label }) => (
   <li className="my-3 shadow rounded">
-    <section className=" p-3 d-flex align-items-center">
-      <p className="text-secondary small">{label}:&nbsp;</p>
-      <p className="text-uppercase"> {list.carrier}</p>
+    <section className="p-3 d-flex align-items-center">
+      <p className="text-secondary small m-0">{label}:&nbsp;</p>
+      <p className="text-uppercase m-0"> {list.carrier}</p>
     </section>
 
     <hr className="m-0" />
-    <section className="d-flex flex-column flex-md-row justify-content-between p-3">
-      <div className="w-100 w-md-50 text-start">
+    <section className="d-flex flex-column flex-sm-row justify-content-between p-3">
+      <div className="text-start">
         <FlightDetail
           label="Departure"
           location={list.departureLocation}
@@ -46,13 +46,13 @@ const ListItem: React.FC<{ list: any; label: string }> = ({ list, label }) => (
           testId="departure-details"
         />
       </div>
-      <div className="w-100 w-md-50 text-end">
+      <div className="text-sm-end">
         <FlightDetail
           label="Arrival"
           location={list.arrivalLocation}
           date={list.arrivalDate}
           testId="arrival-details"
-          className="d-flex justify-content-end"
+          className="d-flex justify-content-sm-end"
         />
       </div>
     </section>

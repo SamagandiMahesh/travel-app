@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 import { Form } from "@/components/molecules/Form/Form";
 
-interface HomeProps {
+ type HomeProps = {
   label?: ReactNode;
 }
 
@@ -19,6 +19,5 @@ const Home: React.FC<HomeProps> = ({ label }) => {
   );
 };
 
-Home.defaultProps = defaultProps;
 
 export default Home;

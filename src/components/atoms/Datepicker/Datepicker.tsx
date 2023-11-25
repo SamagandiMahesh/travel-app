@@ -1,13 +1,9 @@
 import React, { forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { ODDatePickerProps } from './Datepicker.types';
+import { CustomInputProps, ODDatePickerProps } from './Datepicker.types';
 import { StyledDatePicker, StyledInput } from './Datepicker.styles';
 
-interface CustomInputProps {
-  value?: string;
-  onClick?: () => void;
-}
 
 const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(({ value, onClick }, ref) => (
   <StyledInput

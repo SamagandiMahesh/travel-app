@@ -1,23 +1,14 @@
-import React, { ReactNode } from "react";
-import styled from "styled-components";
-import { Form } from "@/components/molecules/Form/Form";
+import React from "react";
+import Form from '../components/molecules/Form/Form';
 
- type HomeProps = {
-  label?: ReactNode;
-}
 
-const defaultProps: HomeProps = {
-  label: "Home Page",
-};
-
-const Home: React.FC<HomeProps> = ({ label }) => {
+const Home:  React.FC = () => {
   return (
-    <>
-      <h2 className="display-6 my-4">{label}</h2>
+    <React.Fragment>
+      <h2 className="display-6 my-4">Search Form </h2>
       <Form />
-    </>
+   </React.Fragment>
   );
 };
-
 
 export default Home;

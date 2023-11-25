@@ -1,7 +1,8 @@
 import React from "react";
-import { CustomDate, ListProps } from "./List.types";
+import {  ListProps } from "./List.types";
+import { ItineraryDate } from '../../organisms/SearchResults/SearchResults.types';
 
-const formatDate = (dt: CustomDate) => {
+const formatDate = (dt: ItineraryDate) => {
   const d = new Date(
     dt.year,
     dt.month,
@@ -16,7 +17,7 @@ const formatDate = (dt: CustomDate) => {
 const FlightDetail: React.FC<{
   label: string;
   location: string;
-  date: CustomDate;
+  date: ItineraryDate;
   testId: string;
   className?: string;
 }> = ({ label, location, date, testId, className }) => (

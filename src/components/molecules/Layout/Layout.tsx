@@ -1,15 +1,14 @@
-import { Footer } from "@/components/atoms/Footer/Footer";
-import { Header } from "@/components/atoms/Header/Header";
 import React from "react";
+import { ComponentSection } from "./Layout.styles";
+import { LayoutProps } from "./Layout.types";
+import { Header } from '../../atoms/Header/Header';
+import { Footer } from '../../atoms/Footer/Footer';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => (
   <div>
     <Header />
-    <section className="container-lg mx-auto">{children}</section>
+    <ComponentSection className="container-lg mx-auto">{children}</ComponentSection>
     <Footer />
   </div>
 );

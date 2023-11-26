@@ -1,5 +1,8 @@
 import React from "react";
-import { ItineraryDate } from "../../organisms/SearchResults/SearchResults.types";
+import {
+  Itinerary,
+  ItineraryDate,
+} from "../../organisms/SearchResults/SearchResults.types";
 import { ListProps } from "./List.types";
 
 const formatDate = (dt: ItineraryDate) => {
@@ -47,7 +50,10 @@ const FlightDetail: React.FC<{
  * @param {any} props.list - The list of flight details.
  * @param {string} props.label - The label of the list item.
  */
-const ListItem: React.FC<{ list: any; label: string }> = ({ list, label }) => (
+const ListItem: React.FC<{ list: Itinerary; label: string }> = ({
+  list,
+  label,
+}) => (
   <li className="my-3 shadow rounded">
     <section className="p-3 d-flex align-items-center">
       <p className="text-secondary small m-0">{label}:&nbsp;</p>

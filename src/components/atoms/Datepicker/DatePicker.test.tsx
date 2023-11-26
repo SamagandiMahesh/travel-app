@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react";
-import { format, subDays } from "date-fns";
 import { ODDatePicker } from "./Datepicker";
 
 console.error = jest.fn();
@@ -7,8 +6,6 @@ console.warn = jest.fn();
 
 describe("ODDatePicker", () => {
   const mockDateChangeHandler = jest.fn();
-  const selectedDate = subDays(new Date(), 3);
-  const formattedDate = format(selectedDate, "MM/dd/yyyy");
 
   it("renders the date picker wrapper", () => {
     const { container } = render(

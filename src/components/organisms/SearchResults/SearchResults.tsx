@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import useFetchData from "../../../hooks/useFetch";
-import { ITINERARY_URL, PAGINATION_LIMIT } from '../../../utils/constants';
+import { ITINERARY_URL, PAGINATION_LIMIT } from "../../../utils/constants";
 import { List } from "../../molecules/List/List";
 import { Pagination } from "../../molecules/Pagination/Pagination";
 import { Itinerary, ItineraryDate } from "./SearchResults.types";
@@ -24,9 +24,7 @@ export const SearchResults: React.FC = () => {
   const [filteredList, setFilteredList] = useState<Itinerary[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, loading, error } = useFetchData<Itinerary>(
-    ITINERARY_URL,
-  );
+  const { data, loading, error } = useFetchData<Itinerary>(ITINERARY_URL);
 
   /**
    * Formats the given date as a locale string.
@@ -91,7 +89,6 @@ export const SearchResults: React.FC = () => {
       setFilteredList(getItineraryData(data));
     }
   }, [data, getItineraryData]);
-
 
   const totalPages = Math.ceil(filteredList.length / PAGINATION_LIMIT);
 

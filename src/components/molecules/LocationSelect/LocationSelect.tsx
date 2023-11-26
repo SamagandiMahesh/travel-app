@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import useFetchData from "../../../hooks/useFetch";
-import { LOCATION_URL } from '../../../utils/constants';
+import { LOCATION_URL } from "../../../utils/constants";
 import { ODSelect } from "../../atoms/Select/Select";
 import { Location } from "../SearchForm/SearchForm.types";
 import { LocationSelectProps } from "./LocationSelect.types";
@@ -42,9 +42,7 @@ export const LocationSelect: React.FC<LocationSelectProps> = ({
     }));
   }, []);
 
-  const { data: locData } = useFetchData<string>(
-    LOCATION_URL
-  );
+  const { data: locData } = useFetchData<string>(LOCATION_URL);
 
   useEffect(() => {
     if (locData) {

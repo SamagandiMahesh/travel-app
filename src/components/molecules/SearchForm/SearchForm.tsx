@@ -17,11 +17,7 @@ import { SearchFormProps } from "./SearchForm.types";
  * ```
  */
 export const SearchForm: React.FC<SearchFormProps> = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       departureLocation: "",
       arrivalLocation: "",

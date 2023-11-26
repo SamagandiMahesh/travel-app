@@ -2,7 +2,7 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import { server } from "../../../../mockServer";
 import { SearchForm } from "./SearchForm";
 
-beforeAll(() => server.listen()); 
+beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
@@ -14,7 +14,7 @@ const router = { push: jest.fn() };
 useRouter.mockReturnValue(router);
 
 jest.mock("../LocationSelect/LocationSelect", () => ({
-  LocationSelect: ({ control, name, setValue }) => (
+  LocationSelect: ({ name, setValue }) => (
     <div>
       <label htmlFor={name} data-testid={`${name}-label`}>
         Departure location

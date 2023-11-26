@@ -10,9 +10,9 @@ jest.mock("react-hook-form", () => ({
   Controller: jest.fn(),
 }));
 
-beforeAll(() => server.listen()); 
-afterEach(() => server.resetHandlers()); 
-afterAll(() => server.close()); 
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 describe("LocationSelect", () => {
   it("renders correctly", async () => {

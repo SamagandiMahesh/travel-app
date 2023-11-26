@@ -10,7 +10,6 @@ afterAll(() => server.close()); // Clean up once the tests are done
 console.error = jest.fn();
 console.warn = jest.fn();
 
-
 const useRouter = jest.spyOn(require("next/router"), "useRouter");
 const router = { push: jest.fn() };
 useRouter.mockReturnValue(router);
@@ -77,7 +76,6 @@ describe("SearchForm", () => {
     const component = render(<SearchForm />);
     const form = component.getByTestId("flight-search-form");
 
-    
     fireEvent.change(component.getByTestId("departureLocation-select"), {
       target: { value: "Location 1" },
     });
@@ -87,7 +85,7 @@ describe("SearchForm", () => {
 
     fireEvent.click(component.getByTestId("datepicker-input"));
     fireEvent.click(
-      component.getByLabelText("Choose Thursday, November 23rd, 2023")
+      component.getByLabelText("Choose Thursday, November 23rd, 2023"),
     );
 
     fireEvent.submit(form);

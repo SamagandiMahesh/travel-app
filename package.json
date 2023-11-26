@@ -12,7 +12,8 @@
     "tsc": "tsc --noEmit",
     "test": "jest --coverage",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "lint:fix": "eslint --fix '**/*.{js,ts,tsx}'"
   },
   "dependencies": {
     "bootstrap": "5.3.2",

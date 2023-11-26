@@ -10,7 +10,7 @@ import useFetchData from "../../../hooks/useFetch";
  * `SearchResults` is a React component that fetches and displays a list of itineraries.
  * It supports pagination and displays 5 itineraries per page.
  * It uses the `useRouter` hook from `next/router` to get the query parameters and the `useFetchData` hook to fetch the itineraries.
- * 
+ *
  * @component
  * @example
  * ```tsx
@@ -30,7 +30,7 @@ export const SearchResults: React.FC = () => {
 
   /**
    * Formats the given date as a locale string.
-   * 
+   *
    * @param {ItineraryDate} date - The date to format.
    * @returns {string} The formatted date.
    */
@@ -42,9 +42,9 @@ export const SearchResults: React.FC = () => {
     ).toLocaleDateString();
   }, []);
 
-   /**
+  /**
    * Checks if the given itinerary date matches the selected date.
-   * 
+   *
    * @param {ItineraryDate} eleDate - The itinerary date.
    * @param {string} selectedDate - The selected date.
    * @returns {boolean} `true` if the dates match, `false` otherwise.
@@ -63,7 +63,7 @@ export const SearchResults: React.FC = () => {
 
   /**
    * Filters and sorts the given itineraries based on the query parameters.
-   * 
+   *
    * @param {Itinerary[]} data - The itineraries to filter and sort.
    * @returns {Itinerary[]} The filtered and sorted itineraries.
    */
@@ -95,9 +95,9 @@ export const SearchResults: React.FC = () => {
   const PER_PAGE = 5;
   const totalPages = Math.ceil(filteredList.length / PER_PAGE);
 
-   /**
+  /**
    * Handles the page change event of the `Pagination` component.
-   * 
+   *
    * @param {number} pageNumber - The page number that was clicked.
    */
   const handlePageChange = (pageNumber: number) => {

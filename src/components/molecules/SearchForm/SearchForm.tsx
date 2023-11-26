@@ -114,4 +114,3 @@ export const SearchForm: React.FC<SearchFormProps> = () => {
     </StyledForm>
   );
 };
-

@@ -8,13 +8,13 @@ import { Location } from "../SearchForm/SearchForm.types";
 /**
  * `LocationSelect` is a component that renders a select dropdown for location selection.
  * It fetches the location data from an API and provides it to the `ODSelect` component.
- * 
+ *
  * @component
  * @example
  * ```tsx
  * <LocationSelect control={control} name="location" setValue={setValue} />
  * ```
- * 
+ *
  * @param {object} props - The props that define the `LocationSelect` component.
  * @param {React.BaseSyntheticEvent} props.control - The control object from `react-hook-form`.
  * @param {string} props.name - The name of the form control.
@@ -30,7 +30,7 @@ export const LocationSelect: React.FC<LocationSelectProps> = ({
   /**
    * Creates an array of options for the `ODSelect` component.
    * Each option is an object with `label` and `value` properties.
-   * 
+   *
    * @param {string[]} data - The location data from the API.
    * @returns {Location[]} The array of options for the `ODSelect` component.
    */
@@ -41,9 +41,9 @@ export const LocationSelect: React.FC<LocationSelectProps> = ({
     }));
   }, []);
 
-  const {
-    data: locData,
-  } = useFetchData<string>("http://localhost:4200/locations");
+  const { data: locData } = useFetchData<string>(
+    "http://localhost:4200/locations",
+  );
 
   useEffect(() => {
     if (locData) {
@@ -68,4 +68,3 @@ export const LocationSelect: React.FC<LocationSelectProps> = ({
     />
   );
 };
-

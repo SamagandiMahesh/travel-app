@@ -8,7 +8,6 @@ import { server } from "../../../../mockServer";
 console.error = jest.fn();
 console.warn = jest.fn();
 
-
 jest.mock("react-hook-form", () => ({
   Controller: jest.fn(),
 }));
@@ -20,18 +19,17 @@ afterAll(() => server.close()); // Clean up once the tests are done
 describe("LocationSelect", () => {
   it("renders correctly", async () => {
     (Controller as jest.Mock).mockImplementation(({ render }) =>
-      render({ field: { onChange: jest.fn() } })
+      render({ field: { onChange: jest.fn() } }),
     );
 
     let component;
 
     await act(async () => {
       component = render(
-        <LocationSelect control={jest.fn()} name="test" setValue={jest.fn()} />
+        <LocationSelect control={jest.fn()} name="test" setValue={jest.fn()} />,
       );
     });
 
     expect(component).toBeTruthy();
   });
-
 });

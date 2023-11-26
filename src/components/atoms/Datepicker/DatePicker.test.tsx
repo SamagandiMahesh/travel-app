@@ -16,10 +16,10 @@ describe("ODDatePicker", () => {
       <ODDatePicker
         selectedDate={null}
         dateChangeHandler={mockDateChangeHandler}
-      />
+      />,
     );
     const datePickerWrapper = container.querySelector(
-      ".react-datepicker-wrapper"
+      ".react-datepicker-wrapper",
     );
 
     expect(datePickerWrapper).toBeInTheDocument();

@@ -17,7 +17,7 @@ const colourStyles: StylesConfig<{ label: string; value: string }> = {
 /**
  * `ODSelect` is a custom select component that uses the `Select` component from `react-select`.
  * It uses the `forwardRef` function to forward the ref to the `Select` component.
- * 
+ *
  * @component
  * @example
  * ```tsx
@@ -31,7 +31,7 @@ const colourStyles: StylesConfig<{ label: string; value: string }> = {
  *   name="select"
  * />
  * ```
- * 
+ *
  * @param {object} props - The properties that define the `ODSelect` component.
  * @param {{ label: string; value: string }} props.defaultValue - The default option of the select.
  * @param {(option: { label: string; value: string }) => void} props.onChange - The function to call when an option is selected.

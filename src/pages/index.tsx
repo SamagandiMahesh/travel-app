@@ -1,5 +1,5 @@
 import React from "react";
-import { SearchForm } from '../components/molecules/SearchForm/SearchForm';
+import { SearchForm } from "../components/molecules/SearchForm/SearchForm";
 
 const Home: React.FC = () => {
   return (

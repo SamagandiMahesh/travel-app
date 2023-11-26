@@ -1,6 +1,8 @@
 {
   "name": "travel-app",
   "version": "0.1.0",
+  "description": "A travel app built with Next.js",
+  "keywords": ["travel", "Next.js", "React"],
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,7 +12,7 @@
     "tsc": "tsc --noEmit",
     "test": "jest --coverage",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "bootstrap": "5.3.2",
@@ -26,9 +28,9 @@
     "testing-library": "0.0.2"
   },
   "devDependencies": {
-        "@testing-library/jest-dom": "6.1.4",
+    "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.1.2",
-    "@testing-library/user-event": "^14.4.3",
+    "@testing-library/user-event": "14.4.3",
     "@types/bootstrap": "5.2.10",
     "@types/jest": "29.5.10",
     "@types/node": "20",

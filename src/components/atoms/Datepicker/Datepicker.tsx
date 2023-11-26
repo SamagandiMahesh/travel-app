@@ -11,6 +11,7 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
       onClick={onClick}
       value={value}
       ref={ref}
+      data-testid="datepicker-input"
     />
   ),
 );
@@ -18,7 +19,7 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
 CustomInput.displayName = "CustomInput";
 
 export const ODDatePicker = forwardRef<HTMLInputElement, ODDatePickerProps>(
-  ({ selectedDate, dateChangeHandler }) => {
+  ({ selectedDate, dateChangeHandler }, ref) => {
     return (
       <StyledDatePicker>
         <DatePicker

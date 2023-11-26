@@ -1,1 +1,1 @@
-import { Form } from "./SearchForm";
+import { SearchForm } from "./SearchForm";

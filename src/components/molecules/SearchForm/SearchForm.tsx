@@ -6,7 +6,7 @@ import { StyledButton, StyledForm } from "./SearchForm.styles";
 import { ODDatePicker } from "../../atoms/Datepicker/Datepicker";
 import { LocationSelect } from "../LocationSelect/LocationSelect";
 
-export const Form: React.FC<SearchFormProps> = () => {
+export const SearchForm: React.FC<SearchFormProps> = () => {
   const {
     control,
     handleSubmit,
@@ -101,4 +101,3 @@ export const Form: React.FC<SearchFormProps> = () => {
   );
 };
 
-export default Form;

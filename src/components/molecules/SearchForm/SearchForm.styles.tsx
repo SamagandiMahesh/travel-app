@@ -18,9 +18,6 @@ export const StyledButton = styled.button`
 `;
 
 export const StyledForm = styled.div`
-
-    label {
-       
-    }
-
+  label {
+  }
 `;

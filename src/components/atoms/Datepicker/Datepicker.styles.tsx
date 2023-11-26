@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const StyledInput = styled.input`
-    height: 44px;
-`
+  height: 44px;
+`;
 
 export const StyledDatePicker = styled.div`
     width: 100%:
@@ -11,4 +11,4 @@ export const StyledDatePicker = styled.div`
     .react-datepicker-wrapper {
         display: block;
     }
-`
+`;

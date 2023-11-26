@@ -1,5 +1,3 @@
 export type HeaderProps = {
-    label?: string;
-  }
-  
-  
+  label?: string;
+};

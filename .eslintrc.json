@@ -1,15 +1,30 @@
 {
   "root": true,
   "extends": ["next/core-web-vitals"],
-  "plugins": ["testing-library"],
+  "plugins": ["testing-library", "@typescript-eslint", "prettier"],
+  "rules": {
+    "prettier/prettier": "warn",
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-expect-error": "allow-with-description",
+        "ts-ignore": true,
+        "ts-nocheck": true,
+        "ts-check": false,
+        "minimumDescriptionLength": 5
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": "warn"
+  },
   "overrides": [
     // Only uses Testing Library lint rules in test files
-    {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
-      "extends": ["plugin:testing-library/react"]
-    }
+    // {
+    //   "files": [
+    //     "**/__tests__/**/*.[jt]s?(x)",
+    //     "**/?(*.)+(spec|test).[jt]s?(x)"
+    //   ],
+    //   "extends": ["plugin:testing-library/react"]
+    // }
   ]
 }

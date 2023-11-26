@@ -1,12 +1,5 @@
-import React, { ForwardedRef } from "react";
-import Select, {
-  ActionMeta,
-  MultiValue,
-  Options,
-  PropsValue,
-  SingleValue,
-  StylesConfig,
-} from "react-select";
+import React from "react";
+import Select, { StylesConfig } from "react-select";
 import { ODSelectProps } from "./Select.types";
 
 const colourStyles: StylesConfig<{ label: string; value: string }> = {
@@ -22,7 +15,7 @@ const colourStyles: StylesConfig<{ label: string; value: string }> = {
 };
 
 export const ODSelect = React.forwardRef<Select, ODSelectProps>(
-  ({ defaultValue, onChange, options }, ref) => {
+  ({ defaultValue, onChange, options, name }, ref) => {
     return (
       <div data-testid="location-select">
         <Select
@@ -31,10 +24,12 @@ export const ODSelect = React.forwardRef<Select, ODSelectProps>(
           options={options}
           styles={colourStyles}
           classNamePrefix="od"
+          name={name}
+          inputId={name}
         />
       </div>
     );
-  }
+  },
 );
 
 ODSelect.displayName = "ODSelect";

@@ -20,7 +20,7 @@
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"]
     },
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts"],
   "exclude": ["node_modules"]

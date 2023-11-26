@@ -1,5 +1,5 @@
 import React from "react";
-import { SearchResults } from '../components/organisms/SearchResults/SearchResults';
+import { SearchResults } from "../components/organisms/SearchResults/SearchResults";
 
 const Results: React.FC = () => {
   return (

@@ -1,6 +1,6 @@
-import { Itinerary } from "@/components/organisms/SearchResults/SearchResults.types";
+import { Itinerary } from "src/components/organisms/SearchResults/SearchResults.types";
 
-  export type ListProps = {
-    label?: string;
-    filteredList: Itinerary[];
-  }
+export type ListProps = {
+  label?: string;
+  filteredList: Itinerary[];
+};

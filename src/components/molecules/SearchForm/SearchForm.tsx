@@ -6,6 +6,16 @@ import { StyledButton, StyledForm } from "./SearchForm.styles";
 import { ODDatePicker } from "../../atoms/Datepicker/Datepicker";
 import { LocationSelect } from "../LocationSelect/LocationSelect";
 
+/**
+ * `SearchForm` is a component that renders a form for searching flights.
+ * It includes fields for departure location, arrival location, and departure date.
+ * It uses `react-hook-form` for form handling and `next/router` for routing.
+ *
+ * @example
+ * ```tsx
+ * <SearchForm />
+ * ```
+ */
 export const SearchForm: React.FC<SearchFormProps> = () => {
   const {
     control,
@@ -25,6 +35,10 @@ export const SearchForm: React.FC<SearchFormProps> = () => {
 
   const router = useRouter();
 
+  /**
+   * Handles the form submission.
+   * It constructs the query parameters and navigates to the results page.
+   */
   const onFlightSearch = useCallback(() => {
     const queryParams = new URLSearchParams();
     const query: { [key: string]: string } = {};

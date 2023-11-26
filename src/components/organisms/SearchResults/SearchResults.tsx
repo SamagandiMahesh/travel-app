@@ -6,6 +6,17 @@ import { Pagination } from "../../molecules/Pagination/Pagination";
 import { List } from "../../molecules/List/List";
 import useFetchData from "../../../hooks/useFetch";
 
+/**
+ * `SearchResults` is a React component that fetches and displays a list of itineraries.
+ * It supports pagination and displays 5 itineraries per page.
+ * It uses the `useRouter` hook from `next/router` to get the query parameters and the `useFetchData` hook to fetch the itineraries.
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <SearchResults />
+ * ```
+ */
 export const SearchResults: React.FC = () => {
   const router = useRouter();
   const { arrival, departure, date } = router.query;
@@ -17,6 +28,12 @@ export const SearchResults: React.FC = () => {
     "http://localhost:4200/itineraries",
   );
 
+  /**
+   * Formats the given date as a locale string.
+   * 
+   * @param {ItineraryDate} date - The date to format.
+   * @returns {string} The formatted date.
+   */
   const formatDate = useCallback((date: ItineraryDate) => {
     return new Date(
       date.year,
@@ -25,6 +42,13 @@ export const SearchResults: React.FC = () => {
     ).toLocaleDateString();
   }, []);
 
+   /**
+   * Checks if the given itinerary date matches the selected date.
+   * 
+   * @param {ItineraryDate} eleDate - The itinerary date.
+   * @param {string} selectedDate - The selected date.
+   * @returns {boolean} `true` if the dates match, `false` otherwise.
+   */
   const isDateMatch = useCallback(
     (eleDate: ItineraryDate, selectedDate: string) => {
       if (!selectedDate) {
@@ -37,6 +61,12 @@ export const SearchResults: React.FC = () => {
     [formatDate],
   );
 
+  /**
+   * Filters and sorts the given itineraries based on the query parameters.
+   * 
+   * @param {Itinerary[]} data - The itineraries to filter and sort.
+   * @returns {Itinerary[]} The filtered and sorted itineraries.
+   */
   const getItineraryData = useCallback(
     (data: Itinerary[]) => {
       return data
@@ -65,6 +95,11 @@ export const SearchResults: React.FC = () => {
   const PER_PAGE = 5;
   const totalPages = Math.ceil(filteredList.length / PER_PAGE);
 
+   /**
+   * Handles the page change event of the `Pagination` component.
+   * 
+   * @param {number} pageNumber - The page number that was clicked.
+   */
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };

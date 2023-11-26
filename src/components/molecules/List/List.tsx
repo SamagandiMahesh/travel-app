@@ -14,6 +14,16 @@ const formatDate = (dt: ItineraryDate) => {
   return d;
 };
 
+/**
+ * `FlightDetail` is a component that renders flight details including label, location, and date.
+ *
+ * @param {object} props - The props that define the `FlightDetail` component.
+ * @param {string} props.label - The label of the flight detail.
+ * @param {string} props.location - The location of the flight detail.
+ * @param {ItineraryDate} props.date - The date of the flight detail.
+ * @param {string} props.testId - The testId of the flight detail.
+ * @param {string} [props.className] - The optional className of the flight detail.
+ */
 const FlightDetail: React.FC<{
   label: string;
   location: string;
@@ -30,6 +40,13 @@ const FlightDetail: React.FC<{
   </section>
 );
 
+/**
+ * `ListItem` is a component that renders a list item with flight details.
+ *
+ * @param {object} props - The props that define the `ListItem` component.
+ * @param {any} props.list - The list of flight details.
+ * @param {string} props.label - The label of the list item.
+ */
 const ListItem: React.FC<{ list: any; label: string }> = ({ list, label }) => (
   <li className="my-3 shadow rounded">
     <section className="p-3 d-flex align-items-center">
@@ -67,6 +84,13 @@ const ListItem: React.FC<{ list: any; label: string }> = ({ list, label }) => (
   </li>
 );
 
+/**
+ * `List` is a component that renders a list of flight details.
+ *
+ * @param {object} props - The props that define the `List` component.
+ * @param {string} [props.label = "Airlines"] - The label of the list.
+ * @param {any[]} props.filteredList - The filtered list of flight details.
+ */
 export const List: React.FC<ListProps> = ({
   label = "Airlines",
   filteredList,

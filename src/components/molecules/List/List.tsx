@@ -1,6 +1,6 @@
 import React from "react";
-import { ListProps } from "./List.types";
 import { ItineraryDate } from "../../organisms/SearchResults/SearchResults.types";
+import { ListProps } from "./List.types";
 
 const formatDate = (dt: ItineraryDate) => {
   const d = new Date(

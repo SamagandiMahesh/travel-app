@@ -1,9 +1,8 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { ODSelect } from "./Select";
 
 describe("ODSelect", () => {
-  it("renders without crashing", () => {
+  it("renders correctly", () => {
     const { getByTestId } = render(
       <ODSelect options={[]} onChange={jest.fn()} />,
     );

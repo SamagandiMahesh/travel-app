@@ -1,11 +1,10 @@
-import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
+import { server } from "../../../../mockServer";
 import { SearchForm } from "./SearchForm";
-import { server } from "../../../../mockServer"; // Import your mock server
 
-beforeAll(() => server.listen()); // Start the mock server
-afterEach(() => server.resetHandlers()); // Reset any runtime request handlers we may add during the tests
-afterAll(() => server.close()); // Clean up once the tests are done
+beforeAll(() => server.listen()); 
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 console.error = jest.fn();
 console.warn = jest.fn();
@@ -54,7 +53,6 @@ describe("SearchForm", () => {
     const component = render(<SearchForm />);
     const form = component.getByTestId("flight-search-form");
 
-    // Select a location
     fireEvent.change(component.getByTestId("departureLocation-select"), {
       target: { value: "Location 1" },
     });

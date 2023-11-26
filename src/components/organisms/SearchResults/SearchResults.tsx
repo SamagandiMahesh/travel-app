@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/router";
-
-import { ItineraryDate, Itinerary } from "./SearchResults.types";
-import { Pagination } from "../../molecules/Pagination/Pagination";
-import { List } from "../../molecules/List/List";
+import React, { useCallback, useEffect, useState } from "react";
 import useFetchData from "../../../hooks/useFetch";
+import { ITINERARY_URL, PAGINATION_LIMIT } from '../../../utils/constants';
+import { List } from "../../molecules/List/List";
+import { Pagination } from "../../molecules/Pagination/Pagination";
+import { Itinerary, ItineraryDate } from "./SearchResults.types";
 
 /**
  * `SearchResults` is a React component that fetches and displays a list of itineraries.
@@ -25,7 +25,7 @@ export const SearchResults: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, loading, error } = useFetchData<Itinerary>(
-    "http://localhost:4200/itineraries",
+    ITINERARY_URL,
   );
 
   /**
@@ -92,8 +92,8 @@ export const SearchResults: React.FC = () => {
     }
   }, [data, getItineraryData]);
 
-  const PER_PAGE = 5;
-  const totalPages = Math.ceil(filteredList.length / PER_PAGE);
+
+  const totalPages = Math.ceil(filteredList.length / PAGINATION_LIMIT);
 
   /**
    * Handles the page change event of the `Pagination` component.
@@ -105,8 +105,8 @@ export const SearchResults: React.FC = () => {
   };
 
   const currentData = filteredList.slice(
-    (currentPage - 1) * PER_PAGE,
-    currentPage * PER_PAGE,
+    (currentPage - 1) * PAGINATION_LIMIT,
+    currentPage * PAGINATION_LIMIT,
   );
 
   return (

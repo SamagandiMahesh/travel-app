@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { StyledFooter } from "./Footer.styles";
 import { FooterProps } from "./Footer.types";
 

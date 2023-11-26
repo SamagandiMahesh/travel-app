@@ -1,5 +1,5 @@
-import React from "react";
 import Link from "next/link";
+import React from "react";
 import { StyledH1, StyledHeader } from "./Header.styles";
 import { HeaderProps } from "./Header.types";
 

@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { SearchFormProps } from "./SearchForm.types";
-import { StyledButton, StyledForm } from "./SearchForm.styles";
 import { ODDatePicker } from "../../atoms/Datepicker/Datepicker";
 import { LocationSelect } from "../LocationSelect/LocationSelect";
+import { StyledButton, StyledForm } from "./SearchForm.styles";
+import { SearchFormProps } from "./SearchForm.types";
 
 /**
  * `SearchForm` is a component that renders a form for searching flights.

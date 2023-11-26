@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { CustomInputProps, ODDatePickerProps } from "./Datepicker.types";
 import { StyledDatePicker, StyledInput } from "./Datepicker.styles";
+import { CustomInputProps, ODDatePickerProps } from "./Datepicker.types";
 
 /**
  * `CustomInput` is a custom input component for the `DatePicker` component.

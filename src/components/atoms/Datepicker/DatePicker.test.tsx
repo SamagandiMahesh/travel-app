@@ -1,6 +1,5 @@
-import React from "react";
 import { render } from "@testing-library/react";
-import { subDays, format } from "date-fns";
+import { format, subDays } from "date-fns";
 import { ODDatePicker } from "./Datepicker";
 
 console.error = jest.fn();

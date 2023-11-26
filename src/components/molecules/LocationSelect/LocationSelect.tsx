@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
-import { ODSelect } from "../../atoms/Select/Select";
 import useFetchData from "../../../hooks/useFetch";
-import { LocationSelectProps } from "./LocationSelect.types";
+import { LOCATION_URL } from '../../../utils/constants';
+import { ODSelect } from "../../atoms/Select/Select";
 import { Location } from "../SearchForm/SearchForm.types";
+import { LocationSelectProps } from "./LocationSelect.types";
 
 /**
  * `LocationSelect` is a component that renders a select dropdown for location selection.
@@ -42,7 +43,7 @@ export const LocationSelect: React.FC<LocationSelectProps> = ({
   }, []);
 
   const { data: locData } = useFetchData<string>(
-    "http://localhost:4200/locations",
+    LOCATION_URL
   );
 
   useEffect(() => {

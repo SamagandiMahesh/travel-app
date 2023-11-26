@@ -1,9 +1,7 @@
-import React from "react";
-import { render, act, fireEvent } from "@testing-library/react";
-import { LocationSelect } from "./LocationSelect";
+import { act, render } from "@testing-library/react";
 import { Controller } from "react-hook-form";
-import selectEvent from "react-select-event";
 import { server } from "../../../../mockServer";
+import { LocationSelect } from "./LocationSelect";
 
 console.error = jest.fn();
 console.warn = jest.fn();
@@ -12,9 +10,9 @@ jest.mock("react-hook-form", () => ({
   Controller: jest.fn(),
 }));
 
-beforeAll(() => server.listen()); // Start the mock server
-afterEach(() => server.resetHandlers()); // Reset any runtime request handlers we may add during the tests
-afterAll(() => server.close()); // Clean up once the tests are done
+beforeAll(() => server.listen()); 
+afterEach(() => server.resetHandlers()); 
+afterAll(() => server.close()); 
 
 describe("LocationSelect", () => {
   it("renders correctly", async () => {

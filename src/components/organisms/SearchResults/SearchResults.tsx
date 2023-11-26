@@ -35,7 +35,7 @@ export const SearchResults: React.FC = () => {
   const formatDate = useCallback((date: ItineraryDate) => {
     return new Date(
       date.year,
-      date.month - 1,
+      date.month,
       date.dayOfMonth,
     ).toLocaleDateString();
   }, []);
@@ -54,7 +54,7 @@ export const SearchResults: React.FC = () => {
       }
       const availableDate = formatDate(eleDate);
       const formattedSelectedDate = new Date(selectedDate).toLocaleDateString();
-      return formattedSelectedDate === availableDate;
+            return formattedSelectedDate === availableDate;
     },
     [formatDate],
   );
@@ -75,9 +75,12 @@ export const SearchResults: React.FC = () => {
           const isArrivalMatch = arrival
             ? ele.arrivalLocation === arrival
             : true;
+          console.log(departure, date, arrival);
           const isDateMatched = isDateMatch(ele.departureDate, date as string);
 
           return isDepartureMatch && isArrivalMatch && isDateMatched;
+
+          
         })
         .sort((a, b) => a.price - b.price);
     },
